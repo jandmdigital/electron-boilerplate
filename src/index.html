@@ -1,0 +1,28 @@
+<!doctype html>
+<html class="no-js" lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>Electron Boilerplate</title>
+
+      <link href="./css/main.css" rel="stylesheet" />
+   </head>
+   <body>
+      <header class="row">
+         <div class="columns">
+            <h1>Electron Boilerplate</h1>
+         </div>
+      </header>
+
+      <section id="main"></section>
+
+      <script>
+         window.$ = window.jQuery = require('jquery');
+         require('foundation-sites');
+         $(document).ready(function() {
+            $(document).foundation();
+         });
+      </script>
+
+      <script src="index.js"></script>
+   </body>
+</html>

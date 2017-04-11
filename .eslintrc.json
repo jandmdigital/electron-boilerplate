@@ -1,0 +1,14 @@
+{
+   "extends": "eslint-config-silvermine/node",
+
+   "env": {
+      "node": true,
+      "es6": true
+   },
+
+   "rules": {
+      "no-restricted-syntax": "off",
+      "new-cap": "off",
+      "no-process-env": "off"
+   }
+}
