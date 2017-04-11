@@ -2,11 +2,9 @@
 
 const { app, BrowserWindow } = require('electron'),
       path = require('path'),
-      url = require('url'),
-      nunjucks = require('nunjucks');
+      url = require('url');
 
-let $ = require('jquery'),
-    win;
+let win;
 
 function createWindow() {
    win = new BrowserWindow({ width: 800, height: 600, show: false });

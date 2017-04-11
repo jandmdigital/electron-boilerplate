@@ -1,8 +1,8 @@
 'use strict';
 
-let nunjucks = require('nunjucks'),
+let templates = require('./templates.js'),
     template;
 
-template = nunjucks.render('/templates/main.html');
-console.log(template);
+template = templates.render('main.html');
+
 $('#main').html(template);
