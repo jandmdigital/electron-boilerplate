@@ -27,35 +27,12 @@ module.exports = function(grunt) {
                includePaths: [ 'node_modules/foundation-sites/scss' ],
             },
             files: {
-               'dist/css/main.css': 'src/sass/main.scss',
+               'src/css/main.css': 'src/sass/main.scss',
             },
          },
       },
 
-      copy: {
-         scripts: {
-            files: [
-               { expand: true, cwd: 'src', src: [ '**/*.js' ], dest: 'dist/' },
-            ],
-         },
-         html: {
-            files: [
-               { expand: true, cwd: 'src', src: [ '**/*.html' ], dest: 'dist/' },
-            ],
-         },
-      },
-
       watch: {
-         scripts: {
-            files: config.js.all,
-            tasks: [ 'copy:scripts' ],
-         },
-
-         html: {
-            files: [ 'src/**/*.html' ],
-            tasks: [ 'copy:html' ],
-         },
-
          sass: {
             files: 'src/sass/**/*.scss',
             tasks: [ 'sass' ],
@@ -66,10 +43,9 @@ module.exports = function(grunt) {
 
    grunt.loadNpmTasks('grunt-eslint');
    grunt.loadNpmTasks('grunt-sass');
-   grunt.loadNpmTasks('grunt-contrib-copy');
    grunt.loadNpmTasks('grunt-contrib-watch');
 
    grunt.registerTask('standards', [ 'eslint' ]);
-   grunt.registerTask('default', [ 'standards', 'sass', 'copy' ]);
+   grunt.registerTask('default', [ 'standards', 'sass' ]);
 
 };

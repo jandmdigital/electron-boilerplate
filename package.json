@@ -2,24 +2,34 @@
   "name": "electron-boilerplate",
   "version": "1.0.0",
   "description": "Boilerplate electron app with foundation and nunjucks",
-  "main": "./dist/app.js",
+  "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "./node_modules/.bin/electron ."
   },
   "author": "Jim Jenkins <jimjenkins@gmail.com>",
   "license": "MIT",
+  "build": {
+    "appId": "com.example.electron-boilerplate",
+    "files": [
+      "src/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "publish": null
+  },
   "devDependencies": {
     "electron": "^1.6.2",
+    "electron-builder": "^16.8.3",
     "eslint": "^3.19.0",
     "eslint-config-silvermine": "^1.1.2",
     "grunt": "^1.0.1",
-    "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-eslint": "^19.0.0",
     "grunt-sass": "^2.0.0"
   },
   "dependencies": {
+    "electron-context-menu": "^0.8.0",
     "foundation-sites": "^6.3.1",
     "jquery": "^3.2.1",
     "nunjucks": "^3.0.0"
