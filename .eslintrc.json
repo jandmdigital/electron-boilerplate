@@ -25,9 +25,12 @@
    },
 
    "rules": {
+      "silvermine/no-multiline-var-declarations": "off",
+      "one-var": "off",
       "no-restricted-syntax": "off",
       "new-cap": "off",
       "no-process-env": "off",
-      "strict": "off"
+      "strict": "off",
+      "react/prop-types": "off"
    }
 }

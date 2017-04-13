@@ -6,9 +6,6 @@ module.exports = function(grunt) {
       js: {
          all: [ 'Gruntfile.js', 'tests/**/*.js', 'src/**/*.js', '!**/node_modules/**/*' ],
       },
-      jsx: {
-         all: [ 'src/**/*.jsx', '!**/node_modules/**/*' ],
-      },
       sass: {
          main: 'src/sass/main.scss',
          all: [ 'src/**/*.scss', '!**/node_modules/**/*' ],
@@ -21,7 +18,7 @@ module.exports = function(grunt) {
       pkg: grunt.file.readJSON('package.json'),
 
       eslint: {
-         target: [].concat(config.js.all, config.jsx.all),
+         target: [].concat(config.js.all),
       },
 
       sass: {
@@ -41,7 +38,7 @@ module.exports = function(grunt) {
       copy: {
          js: {
             files: [
-               { expand: true, cwd: 'src', src: [ '**/*.js' ], dest: 'out/' },
+               { expand: true, cwd: 'src', src: [ 'app.js' ], dest: 'out/' },
             ],
          },
          html: {
@@ -52,11 +49,11 @@ module.exports = function(grunt) {
       },
 
       browserify: {
-         jsx: {
+         js: {
             options: {
                transform: [ [ 'babelify', { plugins: [ 'transform-react-jsx' ], presets: [ 'es2015', 'react' ] } ] ],
             },
-            src: [ 'src/index.jsx' ],
+            src: [ 'src/**/*.js', '!src/app.js' ],
             dest: 'out/bundle.js',
          },
       },
@@ -68,15 +65,11 @@ module.exports = function(grunt) {
          },
          js: {
             files: config.js.all,
-            tasks: [ 'copy:js' ],
+            tasks: [ 'copy:js', 'browserify' ],
          },
          html: {
             files: [ 'src/**/*.html' ],
             tasks: [ 'copy:html' ],
-         },
-         jsx: {
-            files: config.jsx.all,
-            tasks: [ 'browserify' ],
          },
       },
 
@@ -90,6 +83,6 @@ module.exports = function(grunt) {
 
    grunt.registerTask('standards', [ 'eslint' ]);
    grunt.registerTask('build', [ 'sass', 'copy', 'browserify' ]);
-   grunt.registerTask('default', [ 'build' ]);
+   grunt.registerTask('default', [ 'standards', 'build' ]);
 
 };
