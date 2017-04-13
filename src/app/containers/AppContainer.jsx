@@ -22,10 +22,12 @@ export default class AppContainer extends Component {
 
    render() {
       return (
-         <div className="AppContainer">
-            this is the app container
-            <NameInput inputName={this.state.name} onNameChange={this.onNameChange} />
-            <HelloWorld inputName={this.state.name} />
+         <div className="row">
+            <div className="columns">
+               this is the app container
+               <NameInput inputName={this.state.name} onNameChange={this.onNameChange} />
+               <HelloWorld inputName={this.state.name} />
+            </div>
          </div>
       );
    }
