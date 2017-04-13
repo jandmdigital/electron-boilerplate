@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = function(grunt) {
 
    var config;
@@ -8,6 +6,14 @@ module.exports = function(grunt) {
       js: {
          all: [ 'Gruntfile.js', 'tests/**/*.js', 'src/**/*.js', '!**/node_modules/**/*' ],
       },
+      jsx: {
+         all: [ 'src/**/*.jsx', '!**/node_modules/**/*' ],
+      },
+      sass: {
+         main: 'src/sass/main.scss',
+         all: [ 'src/**/*.scss', '!**/node_modules/**/*' ],
+         includePaths: [ 'node_modules/foundation-sites/scss' ],
+      },
    };
 
    grunt.initConfig({
@@ -15,7 +21,7 @@ module.exports = function(grunt) {
       pkg: grunt.file.readJSON('package.json'),
 
       eslint: {
-         target: config.js.all,
+         target: [].concat(config.js.all, config.jsx.all),
       },
 
       sass: {
@@ -24,18 +30,53 @@ module.exports = function(grunt) {
          },
          dist: {
             options: {
-               includePaths: [ 'node_modules/foundation-sites/scss' ],
+               includePaths: config.sass.includePaths,
             },
             files: {
-               'src/css/main.css': 'src/sass/main.scss',
+               'out/css/main.css': config.sass.main,
             },
+         },
+      },
+
+      copy: {
+         js: {
+            files: [
+               { expand: true, cwd: 'src', src: [ '**/*.js' ], dest: 'out/' },
+            ],
+         },
+         html: {
+            files: [
+               { expand: true, cwd: 'src', src: [ '**/*.html' ], dest: 'out/' },
+            ],
+         },
+      },
+
+      browserify: {
+         jsx: {
+            options: {
+               transform: [ [ 'babelify', { plugins: [ 'transform-react-jsx' ], presets: [ 'es2015', 'react' ] } ] ],
+            },
+            src: [ 'src/index.jsx' ],
+            dest: 'out/bundle.js',
          },
       },
 
       watch: {
          sass: {
-            files: 'src/sass/**/*.scss',
+            files: config.sass.all,
             tasks: [ 'sass' ],
+         },
+         js: {
+            files: config.js.all,
+            tasks: [ 'copy:js' ],
+         },
+         html: {
+            files: [ 'src/**/*.html' ],
+            tasks: [ 'copy:html' ],
+         },
+         jsx: {
+            files: config.jsx.all,
+            tasks: [ 'browserify' ],
          },
       },
 
@@ -43,9 +84,12 @@ module.exports = function(grunt) {
 
    grunt.loadNpmTasks('grunt-eslint');
    grunt.loadNpmTasks('grunt-sass');
+   grunt.loadNpmTasks('grunt-browserify');
    grunt.loadNpmTasks('grunt-contrib-watch');
+   grunt.loadNpmTasks('grunt-contrib-copy');
 
    grunt.registerTask('standards', [ 'eslint' ]);
-   grunt.registerTask('default', [ 'standards', 'sass' ]);
+   grunt.registerTask('build', [ 'sass', 'copy', 'browserify' ]);
+   grunt.registerTask('default', [ 'build' ]);
 
 };

@@ -1,18 +1,33 @@
 {
-   "extends": "eslint-config-silvermine/node",
+   "extends": [ "eslint-config-silvermine/node", "plugin:react/recommended" ],
+
+   "plugins": [
+      "react"
+   ],
+
+   "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+         "jsx": true
+      }
+   },
 
    "env": {
       "node": true,
+      "commonjs": true,
       "es6": true
    },
 
    "globals": {
-      "$": true
+      "$": true,
+      "document": true
    },
 
    "rules": {
       "no-restricted-syntax": "off",
       "new-cap": "off",
-      "no-process-env": "off"
+      "no-process-env": "off",
+      "strict": "off"
    }
 }
